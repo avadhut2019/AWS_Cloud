@@ -1,0 +1,22 @@
+Login to the linux box and assume root 
+
+sudo su - 
+Edit /etc/profile and add the following lines to the bottom of the file: 
+
+# command line audit logging
+function log2syslog
+{
+   declare COMMAND
+   COMMAND=$(fc -ln -0)
+   logger -p local1.notice -t bash -i -- "${USER}:${COMMAND}"
+}
+trap log2syslog DEBUG
+Save and exit /etc/profile
+Edit /etc/rsyslog.conf and add the following lines to the bottom of the file: 
+
+# command line audit logging
+local1.* -/var/log/cmdline
+Save and exit /etc/rsyslog.conf 
+Either restart the rsyslog service, or restart the whole machine to release all user sessions - forcing a reload of the bash profile and enacting the changes 
+
+/etc/init.d/rsyslog restart
