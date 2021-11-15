@@ -17,6 +17,12 @@ Edit /etc/rsyslog.conf and add the following lines to the bottom of the file:
 # command line audit logging
 local1.* -/var/log/cmdline
 Save and exit /etc/rsyslog.conf 
+
+touch /var/log/cmdline
+
 Either restart the rsyslog service, or restart the whole machine to release all user sessions - forcing a reload of the bash profile and enacting the changes 
 
 /etc/init.d/rsyslog restart
+
+service rsyslog restart
+
